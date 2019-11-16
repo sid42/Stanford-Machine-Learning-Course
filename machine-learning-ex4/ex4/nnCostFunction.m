@@ -62,6 +62,25 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+% To calculate value of units in output layer
+X = [ones(m, 1) X];
+for i = 1:m,
+    a1 = sigmoid(Theta1 * X(i, :)');
+    hk(i, :) = sigmoid(Theta2 * [1; a1]);
+end;
+
+% To calculate cost function J
+for i = 1:m,
+    yVector = zeros(num_labels, 1);
+    yVector(y(i)) = 1;
+    J = J + sum((-yVector).*(log(hk(i, :))') - (1 - yVector).*(log(1 - hk(i, :)))');
+end;
+J = (1/m) * J;
+
+% To calculate regualation terms
+reg1 = sum(sum(Theta1(:, 2:end).^2));
+reg2 = sum(sum(Theta2(:, 2:end).^2));
+J = J + (lambda/(2*m)) * (reg1 + reg2);
 
 
 

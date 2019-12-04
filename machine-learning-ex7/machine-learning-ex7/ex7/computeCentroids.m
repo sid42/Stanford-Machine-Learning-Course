@@ -26,7 +26,18 @@ centroids = zeros(K, n);
 % Note: You can use a for-loop over the centroids to compute this.
 %
 
-
+for i = 1:K,
+    points = idx == i;
+    sum = 0;
+    count = 0;
+    for j = 1:size(points, 1),
+        if points(j) == 1,
+            count++;
+            sum = sum + X(j, :);
+        end;
+    end;
+    centroids(i, :) = sum.*(1/count);
+end;
 
 
 
